@@ -1,11 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <h1>Hola Mundo</h1>
-</body>
+  </head>
+  <body>
+    <h1 id="zip"></h1>
+
+    <script type="text/javascript">
+      let userZip = prompt("please enter your zipcode: ");
+      console.log(userZip);
+      let url = "http://api.zippopotam.us/us/";
+      url += userZip;
+
+      console.log(url);
+
+      //document.getElementById("zip").innerText = userZip + url;
+
+      let client = new XMLHttpRequest();
+      client.open("GET", url, true);
+      client.onreadystatechange = function () {
+        if (client.readyState == 4) {
+          let myInfo = JSON.parse(client.responseText);
+          //let placeName = "place name";
+          document.getElementById(
+            "zip"
+          ).innerText = ` ${myInfo.places[0]["place name"]}, ${myInfo.places[0]["state abbreviation"]}`;
+          //${myInfo.places[0].state},
+          // myInfo["post code"];
+          //myInfo.country;
+          console.log(client.responseText);
+        }
+      };
+
+      client.send();
+    </script>
+  </body>
 </html>
